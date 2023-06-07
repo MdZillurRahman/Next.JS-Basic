@@ -32,7 +32,7 @@ const Navbar = () => {
         <p className="logo_text">Promptopia</p>
       </Link>
 
-      {/* desktop bnavigation*/}
+      {/* desktop navigation*/}
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
@@ -46,7 +46,7 @@ const Navbar = () => {
 
             <Link href="/profile">
               <Image
-                src="/assets/images/logo.svg"
+                src={session?.user.image}
                 width={37}
                 height={37}
                 alt="Profile"
@@ -58,14 +58,16 @@ const Navbar = () => {
           <>
             {providers &&
               Object.values(providers).map((provider) => {
-               return <button
-                  type="button"
-                  key={provider.name}
-                  className="black_btn"
-                  onClick={() => signIn(provider.id)}
-                >
-                  Sign In
-                </button>
+                return (
+                  <button
+                    type="button"
+                    key={provider.name}
+                    className="black_btn"
+                    onClick={() => signIn(provider.id)}
+                  >
+                    Sign In
+                  </button>
+                );
               })}
           </>
         )}
@@ -75,7 +77,7 @@ const Navbar = () => {
         {session?.user ? (
           <div className="flex">
             <Image
-              src="/assets/images/logo.svg"
+              src={session?.user.image}
               width={37}
               height={37}
               alt="dropdown"
