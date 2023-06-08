@@ -21,7 +21,7 @@ const Feed = () => {
   const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState([]);
 
-  const searchPrompt = async (search)=>{
+  const searchPrompt = async (search) => {
     const response = await fetch("/api/prompt");
     const data = await response.json();
 
@@ -35,7 +35,7 @@ const Feed = () => {
     );
 
     setPosts(filteredPost);
-  }
+  };
 
   const handleSearchChange = async (e) => {
     e.preventDefault();
@@ -44,8 +44,8 @@ const Feed = () => {
   };
 
   const handleTagClick = (tag) => {
-    setSearchText(tag.toString());
-    searchPrompt(tag.toString());
+    // setSearchText(tag.toString());
+    // searchPrompt(tag.toString());
   };
 
   useEffect(() => {
