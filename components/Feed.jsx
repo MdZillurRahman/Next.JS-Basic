@@ -44,8 +44,8 @@ const Feed = () => {
   };
 
   const handleTagClick = (tag) => {
-    // setSearchText(tag.toString());
-    // searchPrompt(tag.toString());
+    setSearchText(tag.toString());
+    searchPrompt(tag.toString());
   };
 
   useEffect(() => {
