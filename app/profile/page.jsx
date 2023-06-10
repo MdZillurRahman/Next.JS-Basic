@@ -50,6 +50,7 @@ const MyProfile = () => {
   return (
     <Profile
       name="My"
+      welcomeNote={`Hello ${session?.user.name}.`}
       desc="Welcome to your personalize profile"
       data={posts}
       handleEdit={handleEdit}
