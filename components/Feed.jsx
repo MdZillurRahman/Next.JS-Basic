@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
-const PromptCardList = ({ data, handleTagClick }) => {
+const PromptCardList = ({ data, handleTagClick, handleDifferentUser }) => {
   return (
     <div className="mt-16 prompt_layout">
       {data?.map((post) => (
@@ -11,6 +13,7 @@ const PromptCardList = ({ data, handleTagClick }) => {
           key={post._id}
           post={post}
           handleTagClick={handleTagClick}
+          handleDifferentUser={handleDifferentUser}
         />
       ))}
     </div>
@@ -20,6 +23,8 @@ const PromptCardList = ({ data, handleTagClick }) => {
 const Feed = () => {
   const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState([]);
+  const router = useRouter();
+  const { data: session } = useSession();
 
   const searchPrompt = async (search) => {
     const response = await fetch("/api/prompt");
@@ -48,6 +53,14 @@ const Feed = () => {
     searchPrompt(tag.toString());
   };
 
+  const handleDifferentUser = (postCreator) => {
+    if (session.user.id === postCreator._id) {
+      router.push("/profile");
+    } else {
+      router.push(`/profile/${postCreator._id}?name=${postCreator.userName}`);
+    }
+  };
+
   useEffect(() => {
     const fetchPost = async () => {
       const response = await fetch("/api/prompt");
@@ -71,7 +84,11 @@ const Feed = () => {
         />
       </form>
 
-      <PromptCardList data={posts} handleTagClick={handleTagClick} />
+      <PromptCardList
+        data={posts}
+        handleTagClick={handleTagClick}
+        handleDifferentUser={handleDifferentUser}
+      />
     </section>
   );
 };

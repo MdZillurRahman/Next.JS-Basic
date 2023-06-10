@@ -5,7 +5,13 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 
-const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
+const PromptCard = ({
+  post,
+  handleTagClick,
+  handleEdit,
+  handleDelete,
+  handleDifferentUser,
+}) => {
   const [copied, setCopied] = useState("");
   const { data: session } = useSession();
   const pathName = usePathname();
@@ -17,23 +23,28 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
     setTimeout(() => setCopied(""), 3000);
   };
 
-
   return (
     <div className="prompt_card">
-      <div className="copy_btn w-4 h-4 absolute top-2 right-2" onClick={() => handleCopy()}>
-          <Image
-            src={
-              copied === post.prompt
-                ? "./assets/icons/tick.svg"
-                : "./assets/icons/copy.svg"
-            }
-            alt="copy"
-            width={12}
-            height={12}
-          />
-          {/* {copied ? "Copied" : "Copy"} */}
-        </div>
-      <div className="flex justify-between items-start gap-5 mt-3">
+      <div
+        className="copy_btn w-4 h-4 absolute top-2 right-2"
+        onClick={() => handleCopy()}
+      >
+        <Image
+          src={
+            copied === post.prompt
+              ? "./assets/icons/tick.svg"
+              : "./assets/icons/copy.svg"
+          }
+          alt="copy"
+          width={12}
+          height={12}
+        />
+        {/* {copied ? "Copied" : "Copy"} */}
+      </div>
+      <div
+        className="flex justify-between items-start gap-5 mt-3"
+        onClick={() => handleDifferentUser(post.creator)}
+      >
         <div className="flex flex-1 justify-start items-center gap-3 cursor-pointer">
           <Image
             src={post.creator.image}
